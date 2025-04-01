@@ -1,5 +1,6 @@
 package com.enjoy.ds.ratelimiter;
 
+import com.enjoy.ds.ratelimiter.model.Post;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 

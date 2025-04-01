@@ -1,19 +1,17 @@
 package com.enjoy.ds.ratelimiter;
 
+import com.enjoy.ds.ratelimiter.model.Post;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.server.ServerResponse;
-import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
 
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/api/posts")
 public class PostHandler {
     private final PostRepository postRepository;
 

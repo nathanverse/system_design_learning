@@ -1,4 +1,4 @@
-package com.enjoy.ds.ratelimiter;
+package com.enjoy.ds.ratelimiter.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
