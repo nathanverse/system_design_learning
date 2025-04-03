@@ -1,5 +1,6 @@
 package com.enjoy.ds.ratelimiter;
 
+import com.enjoy.ds.ratelimiter.annotation.LoggableApi;
 import com.enjoy.ds.ratelimiter.model.Post;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +13,14 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/api/posts")
-public class PostHandler {
+public class PostController {
     private final PostRepository postRepository;
 
-    public PostHandler(PostRepository postRepository) {
+    public PostController(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
+    @LoggableApi(number = 42, apiName = "post-get")
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<Post>> getPost(@PathVariable String id) {
         return postRepository.findPost(id).map(

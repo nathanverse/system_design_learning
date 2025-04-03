@@ -46,8 +46,11 @@ public class SecurityConfig {
         return Mono::just;
     }
 
-    @Bean
-    public AuthenticationWebFilter authenticationWebFilter(
+    // We make this a private call, not bean, because provide this filter
+    // as bean may cause it to be called twice, once by Spring Boot embedded
+    // container, once by Spring Security.
+    // See https://docs.spring.io/spring-security/reference/servlet/architecture.html#_declaring_your_filter_as_a_bean
+    private AuthenticationWebFilter authenticationWebFilter(
             ServerAuthenticationConverter jwtAuthenticationConverter
     ) {
         AuthenticationWebFilter filter = new AuthenticationWebFilter(jwtAuthenticationManager());
@@ -56,7 +59,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http, AuthenticationWebFilter authenticationWebFilter) {
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges -> exchanges
@@ -64,12 +67,11 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                         .anyExchange().authenticated()
                 )
-                .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+                .addFilterAt(authenticationWebFilter(jwtAuthenticationConverter()), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
 
-    @Bean
-    public ServerAuthenticationConverter jwtAuthenticationConverter() {
+    private ServerAuthenticationConverter jwtAuthenticationConverter() {
         return new JwtAuthenticationConverter(tokenProvider);
     }
 }
