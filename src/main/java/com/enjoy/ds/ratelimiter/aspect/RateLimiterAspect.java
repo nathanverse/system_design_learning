@@ -1,7 +1,6 @@
 package com.enjoy.ds.ratelimiter.aspect;
 
 import com.enjoy.ds.ratelimiter.annotation.LoggableApi;
-import com.enjoy.ds.ratelimiter.model.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,11 +16,10 @@ import javax.naming.AuthenticationException;
 import java.util.Arrays;
 
 
-
 @Aspect
 @Component
-public class ReactiveLoggingAspect {
-    private static final Logger logger = LoggerFactory.getLogger(ReactiveLoggingAspect.class);
+public class RateLimiterAspect {
+    private static final Logger logger = LoggerFactory.getLogger(RateLimiterAspect.class);
 
     @Around("@annotation(loggableApi)")
     public Mono<?> logApI(ProceedingJoinPoint joinPoint, LoggableApi loggableApi) {
