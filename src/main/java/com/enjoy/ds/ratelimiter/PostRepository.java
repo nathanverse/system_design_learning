@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 @Repository
 public class PostRepository {
-    public Mono<Post> findPost(String id) {
-        return Mono.just(new Post(id, "hello"));
-    }
+  public Mono<Post> findPost(String id) {
+    return Mono.just(new Post(id, "hello"));
+  }
 }

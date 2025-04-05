@@ -7,8 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LoggableApi {
-  int number() default 0; // The number parameter you requested
-
+public @interface RateLimit {
   String apiName() default ""; // Optional API name
 }

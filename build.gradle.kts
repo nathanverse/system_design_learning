@@ -2,6 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.4.4"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("com.diffplug.spotless") version "7.0.2"
 	id("com.google.cloud.tools.jib") version "3.4.5"
 
 }
@@ -36,6 +37,24 @@ jib{
 
 repositories {
 	mavenCentral()
+}
+
+spotless {
+	// Configure Java formatting
+	java {
+		target("**/*.java") // Applies to all Java files
+		removeUnusedImports() // Removes unused imports
+		googleJavaFormat() // Formats with Google Java Style
+		// Alternatively: eclipse().configFile("formatter.xml")
+	}
+
+	// Configure Kotlin formatting (if applicable)
+	kotlin {
+		target("**/*.kt") // Applies to all Kotlin files
+		ktlint() // Uses Ktlint (standard Kotlin formatter)
+		// Optional: Add license header
+		licenseHeader("/* License Header */")
+	}
 }
 
 dependencies {
