@@ -3,6 +3,7 @@ package com.enjoy.ds.ratelimiter;
 import com.enjoy.ds.ratelimiter.annotation.LoggableApi;
 import com.enjoy.ds.ratelimiter.annotation.RateLimit;
 import com.enjoy.ds.ratelimiter.model.Post;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import reactor.core.publisher.Mono;
 public class PostController {
   private final PostRepository postRepository;
 
+  @Autowired
   public PostController(PostRepository postRepository) {
     this.postRepository = postRepository;
   }

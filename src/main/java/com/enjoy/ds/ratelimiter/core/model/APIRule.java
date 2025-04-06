@@ -9,5 +9,5 @@ import lombok.Value;
 public class APIRule {
   public String api;
   public int limit;
-  public TimeUnit unit;
+  public long millisecond;
 }
