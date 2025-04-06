@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class RateLimiterRuleService {
 
   private final Map<String, APIRule> rules =
-      Map.of("post_a_post", new APIRule("post_a_post", 3, TimeUnit.MINUTES));
+      Map.of("post_a_post", new APIRule("post_a_post", 2, TimeUnit.SECONDS.toMillis(1)));
 
   public APIRule getRule(String apiName) {
     return rules.getOrDefault(apiName, null);

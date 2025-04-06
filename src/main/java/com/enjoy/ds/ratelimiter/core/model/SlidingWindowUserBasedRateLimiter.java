@@ -45,7 +45,7 @@ public class SlidingWindowUserBasedRateLimiter implements UserBasedRateLimiter {
                     return List.of(requestTimeStamp);
                   }
 
-                  long outDatedPoint = requestTimeStamp - apiRule.getUnit().toMillis(1);
+                  long outDatedPoint = requestTimeStamp - apiRule.getMillisecond();
                   int maximumOutdatedElementIndex =
                       searchMaximumElementLowerThan(timestamps, outDatedPoint);
 
