@@ -1,4 +1,4 @@
-package com.enjoy.ds.ratelimiter.service;
+package com.enjoy.ds.ratelimiter;
 
 import com.enjoy.ds.ratelimiter.model.User;
 import java.util.UUID;
