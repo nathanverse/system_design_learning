@@ -68,6 +68,7 @@ dependencies {
 	compileOnly("org.projectlombok:lombok:1.18.30") // Or the latest version
 	annotationProcessor("org.projectlombok:lombok:1.18.30")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("io.projectreactor:reactor-test:3.7.4")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

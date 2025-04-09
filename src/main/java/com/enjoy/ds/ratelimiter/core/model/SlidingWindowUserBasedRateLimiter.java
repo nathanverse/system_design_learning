@@ -45,9 +45,15 @@ public class SlidingWindowUserBasedRateLimiter implements UserBasedRateLimiter {
                     return List.of(requestTimeStamp);
                   }
 
+
+
                   long outDatedPoint = requestTimeStamp - apiRule.getMillisecond();
                   int maximumOutdatedElementIndex =
                       searchMaximumElementLowerThan(timestamps, outDatedPoint);
+
+                    if(timestamps.size() == 50){
+                        System.out.println("dsa");
+                    }
 
                   List<Long> timeStampsAfterClear;
                   if (maximumOutdatedElementIndex == -1) {
@@ -68,6 +74,7 @@ public class SlidingWindowUserBasedRateLimiter implements UserBasedRateLimiter {
                   return timeStampsAfterClear;
                 })
             .size();
+
 
     return requestNum <= apiRule.limit;
   }
