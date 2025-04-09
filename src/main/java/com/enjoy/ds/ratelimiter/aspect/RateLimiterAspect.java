@@ -16,8 +16,6 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
-
 @Aspect
 @Component
 public class RateLimiterAspect {
@@ -35,11 +33,6 @@ public class RateLimiterAspect {
         .map(SecurityContext::getAuthentication)
         .flatMap(
             auth -> {
-            Object[] args = joinPoint.getArgs();
-            String hello = (String) args[0];
-            if(Objects.equals(hello, "50")){
-                System.out.println("dsa");
-            }
               String userIdString = auth.getName();
               String apiName = rateLimit.apiName();
 

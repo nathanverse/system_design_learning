@@ -1,6 +1,5 @@
 package com.enjoy.ds.ratelimiter.core.model;
 
-import java.util.concurrent.TimeUnit;
 import lombok.Data;
 import lombok.Value;
 
