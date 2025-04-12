@@ -60,6 +60,10 @@ public class PostRepository {
 
               return Mono.empty();
             })
-        .switchIfEmpty(setPostRedisMono);
+        .switchIfEmpty(setPostRedisMono)
+        .onErrorResume(e -> {
+            logger.error("Something goes wrong with Redis, fallback to pass all requests, error message: {}", e.getMessage());
+            return Mono.just(new Post(id, "hello"));
+        }); // Fallback passing all requests
   }
 }
