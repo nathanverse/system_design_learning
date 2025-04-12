@@ -2,8 +2,9 @@ package com.enjoy.ds.ratelimiter.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 
-public class Post {
+public class Post implements Serializable {
   private String id;
   private String description;
 

@@ -1,75 +1,52 @@
 package com.enjoy.ds.ratelimiter.core.model;
 
-import static com.enjoy.ds.ratelimiter.utils.SearchingUtil.searchMaximumElementLowerThan;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 @Component
 public class SlidingWindowUserBasedRateLimiter implements UserBasedRateLimiter {
 
   private final RateLimiterRuleService rateLimiterRuleService;
-  private final ConcurrentHashMap<String, List<Long>> slidingWindowRecordMap =
-      new ConcurrentHashMap<>();
+  private final SlidingWindowRateLimiterStorage slidingWindowRecordMap;
+  private static final Logger logger =
+      LoggerFactory.getLogger(SlidingWindowUserBasedRateLimiter.class);
 
   @Autowired
-  public SlidingWindowUserBasedRateLimiter(RateLimiterRuleService rateLimiterRuleService) {
+  public SlidingWindowUserBasedRateLimiter(
+      RateLimiterRuleService rateLimiterRuleService,
+      SlidingWindowRateLimiterStorage slidingWindowRecordMap) {
     this.rateLimiterRuleService = rateLimiterRuleService;
+    this.slidingWindowRecordMap = slidingWindowRecordMap;
   }
 
   @Override
-  public boolean passOrNot(String userIdentity, String apiName) {
-    String key = key(userIdentity, apiName);
-    Long requestTimeStamp = System.currentTimeMillis();
+  public Mono<Boolean> isAllowed(String userIdentity, String apiName) {
+    return Mono.defer(
+        () -> {
+          String key = key(userIdentity, apiName);
+          Long requestTimeStamp = System.currentTimeMillis();
+          logger.info("Check: {}", key);
+          if (key.isEmpty()) {
+            throw new IllegalStateException("Key can not be empty");
+          }
 
-    if (key.isEmpty()) {
-      throw new IllegalStateException("Key can not be empty");
-    }
+          return rateLimiterRuleService
+              .getRule(apiName)
+              .flatMap(
+                  apiRule -> {
+                    if (apiRule == null) {
+                      return Mono.error(
+                          new IllegalStateException(
+                              "Can not retrieve rate limiter rule for api: " + apiName + "."));
+                    }
 
-    APIRule apiRule = rateLimiterRuleService.getRule(apiName);
-
-    if (apiRule == null) {
-      throw new IllegalStateException(
-          "Can not retrieve rate limiter rule for api: " + apiName + ".");
-    }
-
-    int requestNum =
-        slidingWindowRecordMap
-            .compute(
-                key,
-                (k, timestamps) -> {
-                  if (timestamps == null) {
-                    return List.of(requestTimeStamp);
-                  }
-
-                  long outDatedPoint = requestTimeStamp - apiRule.getMillisecond();
-                  int maximumOutdatedElementIndex =
-                      searchMaximumElementLowerThan(timestamps, outDatedPoint);
-
-                  List<Long> timeStampsAfterClear;
-                  if (maximumOutdatedElementIndex == -1) {
-                    timeStampsAfterClear =
-                        new ArrayList<>(timestamps.subList(0, timestamps.size()));
-                  } else if (maximumOutdatedElementIndex != timestamps.size() - 1) {
-                    timeStampsAfterClear =
-                        new ArrayList<>(
-                            timestamps.subList(maximumOutdatedElementIndex + 1, timestamps.size()));
-                  } else {
-                    timeStampsAfterClear =
-                        new ArrayList<>(); // If maximumOutdatedElementIndex is the last element,
-                    // the subList would be empty
-                  }
-
-                  timeStampsAfterClear.add(requestTimeStamp);
-
-                  return timeStampsAfterClear;
-                })
-            .size();
-
-    return requestNum <= apiRule.limit;
+                    return slidingWindowRecordMap.putTimeStamp(
+                        key, requestTimeStamp, apiRule.getMillisecond(), apiRule.getLimit());
+                  });
+        });
   }
 
   private String key(String userIdentity, String apiName) {

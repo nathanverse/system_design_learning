@@ -36,8 +36,12 @@ public class RateLimiterAspect {
               String userIdString = auth.getName();
               String apiName = rateLimit.apiName();
 
+              return this.rateLimiter.isAllowed(userIdString, apiName);
+            })
+        .flatMap(
+            isAllowed -> {
               try {
-                if (this.rateLimiter.passOrNot(userIdString, apiName)) {
+                if (isAllowed) {
                   return ((Mono<?>) joinPoint.proceed());
                 }
 
@@ -48,10 +52,11 @@ public class RateLimiterAspect {
                 return Mono.error(e);
               }
             })
-        .switchIfEmpty(
-            Mono.defer(
-                () -> {
-                  return Mono.error(AuthenticationException::new);
-                }));
+        .onErrorResume(
+            e ->
+                Mono.just(
+                    ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Something goes wrong, message: " + e.getMessage() + ".")))
+        .switchIfEmpty(Mono.defer(() -> Mono.error(AuthenticationException::new)));
   }
 }
