@@ -43,8 +43,8 @@ public class SlidingWindowUserBasedRateLimiter implements UserBasedRateLimiter {
                               "Can not retrieve rate limiter rule for api: " + apiName + "."));
                     }
 
-                    return slidingWindowRecordMap
-                            .putTimeStamp(key, requestTimeStamp, apiRule.getMillisecond(), apiRule.getLimit());
+                    return slidingWindowRecordMap.putTimeStamp(
+                        key, requestTimeStamp, apiRule.getMillisecond(), apiRule.getLimit());
                   });
         });
   }

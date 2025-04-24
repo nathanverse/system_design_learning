@@ -3,7 +3,6 @@ package com.enjoy.ds.ratelimiter.core.model;
 import com.enjoy.ds.ratelimiter.cache.RedisService;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,8 @@ import reactor.core.publisher.Mono;
  */
 public class DistributedSlidingWindowRateLimiterStorage implements SlidingWindowRateLimiterStorage {
   private static final AtomicInteger counter = new AtomicInteger(0);
-  private static final Logger logger = LoggerFactory.getLogger(DistributedSlidingWindowRateLimiterStorage.class);
+  private static final Logger logger =
+      LoggerFactory.getLogger(DistributedSlidingWindowRateLimiterStorage.class);
   private final RedisService redisService;
   private static final String LUA_SCRIPT =
       """
@@ -62,9 +62,12 @@ public class DistributedSlidingWindowRateLimiterStorage implements SlidingWindow
             String.valueOf(UUID.randomUUID().toString()),
             String.valueOf(counter.getAndIncrement()))
         .map(result -> (Boolean) result)
-        .onErrorResume(e -> {
-          logger.error("Something goes wrong with Redis, fallback to pass all requests, error message: {}", e.getMessage());
-          return Mono.just(true);
-        }); // Fallback passing all requests
+        .onErrorResume(
+            e -> {
+              logger.error(
+                  "Something goes wrong with Redis, fallback to pass all requests, error message: {}",
+                  e.getMessage());
+              return Mono.just(true);
+            }); // Fallback passing all requests
   }
 }

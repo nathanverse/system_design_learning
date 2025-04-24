@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: arm64v8/redis:7.4-bookworm
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: redis-pvc
+              mountPath: /data
+
+      volumes:
+        - name: redis-pvc
+          persistentVolumeClaim:
+            claimName: redis-data-pvc

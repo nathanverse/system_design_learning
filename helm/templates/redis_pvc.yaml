@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data-pvc      # <--- Choose a descriptive name. Your Redis StatefulSet/Deployment will refer to this.
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce        # <--- How the volume can be mounted.
+  resources:
+    requests:
+      storage: 1Gi         # <--- How much storage you are requesting. e.g., 1Gi (Gibibyte), 500Mi (Mebibyte)

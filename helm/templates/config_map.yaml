@@ -1,0 +1,8 @@
+apiVersion: v1          # API version for ConfigMap
+kind: ConfigMap         # Resource type
+metadata:
+  name: rate-limiter-config
+  namespace: {{ .Release.Namespace }}
+data:                   # Section for storing configuration data as key-value pairs (strings)
+  redis-host: redis-service    # Value is the Kubernetes Service name for Redis
+  redis-port: "6379"           # The port your Redis service exposes (default is 6379)
