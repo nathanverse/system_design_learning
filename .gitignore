@@ -1,4 +1,4 @@
-.gradle/
+eej_rate_limiter/.gradle/
 build/
 .idea/
 */resources/*.xml

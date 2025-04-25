@@ -12,7 +12,7 @@ services:
 
   java-app:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile  # Your Java app's Dockerfile
     container_name: java-app
     ports:
