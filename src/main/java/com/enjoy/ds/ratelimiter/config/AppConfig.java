@@ -5,16 +5,22 @@ import com.enjoy.ds.ratelimiter.core.model.DistributedSlidingWindowRateLimiterSt
 import com.enjoy.ds.ratelimiter.core.model.SlidingWindowRateLimiterStorage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.lettuce.core.RedisClient;
+import io.lettuce.core.RedisURI;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
 @EnableAspectJAutoProxy
+@EnableConfigurationProperties(RedisConfig.class)
 public class AppConfig {
   @Bean
-  public RedisClient redisClient() {
-    return RedisClient.create("redis://localhost:6379");
+  public RedisClient redisClient(RedisConfig redisConfig) {
+    return RedisClient.create(
+        new RedisURI(redisConfig.host(), redisConfig.port(), Duration.of(2000, ChronoUnit.MILLIS)));
   }
 
   @Bean
