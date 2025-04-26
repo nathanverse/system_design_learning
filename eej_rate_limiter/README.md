@@ -58,7 +58,7 @@ To implement a dynamic rate limiter in a Spring Boot application with API-specif
 
 Following is the summarization of the process.
 
-![AOP_rate_limiter](/static/AOP_rate_limiter.jpg)
+![AOP_rate_limiter](/eej_rate_limiter/static/AOP_rate_limiter.jpg)
 
 You can look through these components to understand how dynamic loading works 
 `PostController`, `RateLimit`, `RateLimiterRuleService`, `SlidingWindowUserBasedRateLimiter`.
