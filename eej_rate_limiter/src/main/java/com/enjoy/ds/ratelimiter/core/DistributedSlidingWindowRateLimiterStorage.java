@@ -1,4 +1,4 @@
-package com.enjoy.ds.ratelimiter.core.model;
+package com.enjoy.ds.ratelimiter.core;
 
 import com.enjoy.ds.ratelimiter.cache.RedisService;
 import java.util.UUID;

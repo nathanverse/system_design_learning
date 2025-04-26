@@ -1,7 +1,9 @@
-package com.enjoy.ds.ratelimiter.core.model;
+package com.enjoy.ds.ratelimiter.core;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import com.enjoy.ds.ratelimiter.core.model.APIRule;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
