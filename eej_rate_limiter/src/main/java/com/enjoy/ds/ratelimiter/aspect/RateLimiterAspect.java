@@ -1,7 +1,7 @@
 package com.enjoy.ds.ratelimiter.aspect;
 
 import com.enjoy.ds.ratelimiter.annotation.RateLimit;
-import com.enjoy.ds.ratelimiter.core.model.UserBasedRateLimiter;
+import com.enjoy.ds.ratelimiter.core.UserBasedRateLimiter;
 import javax.naming.AuthenticationException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

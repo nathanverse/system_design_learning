@@ -1,4 +1,4 @@
-package com.enjoy.ds.ratelimiter.core.model;
+package com.enjoy.ds.ratelimiter.core;
 
 import static com.enjoy.ds.ratelimiter.utils.SearchingUtil.searchMaximumElementLowerThan;
 

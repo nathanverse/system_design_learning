@@ -1,4 +1,4 @@
-package com.enjoy.ds.ratelimiter.core.model;
+package com.enjoy.ds.ratelimiter.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

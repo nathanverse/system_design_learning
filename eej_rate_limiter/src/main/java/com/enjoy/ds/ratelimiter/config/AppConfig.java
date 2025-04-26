@@ -1,8 +1,8 @@
 package com.enjoy.ds.ratelimiter.config;
 
 import com.enjoy.ds.ratelimiter.cache.RedisService;
-import com.enjoy.ds.ratelimiter.core.model.DistributedSlidingWindowRateLimiterStorage;
-import com.enjoy.ds.ratelimiter.core.model.SlidingWindowRateLimiterStorage;
+import com.enjoy.ds.ratelimiter.core.DistributedSlidingWindowRateLimiterStorage;
+import com.enjoy.ds.ratelimiter.core.SlidingWindowRateLimiterStorage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;

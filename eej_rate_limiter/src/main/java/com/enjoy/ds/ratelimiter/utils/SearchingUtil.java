@@ -1,7 +1,10 @@
 package com.enjoy.ds.ratelimiter.utils;
 
 import java.util.List;
+import java.util.Objects;
+
 import lombok.NonNull;
+import org.springframework.security.core.parameters.P;
 
 public class SearchingUtil {
   public static int searchMaximumElementLowerThan(
@@ -10,29 +13,25 @@ public class SearchingUtil {
       throw new IllegalArgumentException("Can not search in empty list");
     }
 
-    if (timestamps.get(0) >= timestamp) {
+    int left = 0;
+    int right = timestamps.size();
+    int res = -1;
+
+    while (left < right) {
+      int mid = left + (right - left) / 2;
+
+      if(timestamps.get(mid) >= timestamp){
+        right = mid;
+      } else if(timestamps.get(mid) < timestamp) {
+        res = mid;
+        left = mid + 1;
+      }
+    }
+
+    if(res != -1 && Objects.equals(timestamps.get(res), timestamp)){
       return -1;
     }
 
-    int left = 0;
-    int right = timestamps.size() - 1;
-    int mid = left + (right - left) / 2;
-
-    while (left <= right) {
-      if ((timestamps.get(mid) < timestamp
-          && (mid + 1 >= timestamps.size() || timestamps.get(mid + 1) >= timestamp))) {
-        return mid;
-      }
-
-      if ((timestamps.get(mid) >= timestamp)) {
-        right = mid - 1;
-      } else {
-        left = mid + 1;
-      }
-
-      mid = left + (right - left) / 2;
-    }
-
-    return -1;
+    return res;
   }
 }
