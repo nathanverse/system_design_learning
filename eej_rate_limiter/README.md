@@ -10,7 +10,7 @@ However, you can still read the following documentation which will provide you w
 
 ## 2. Implementation
 
-## 2.1. Checking rate limiter condition.
+### 2.1. Checking rate limiter condition.
 To make it simple, the rate limiter of this project will be based on API per user, more specifically the number of posts user can upload
 per second in a social media app.
 
@@ -20,7 +20,7 @@ around a method call. Leveraging it, we can make our rate limiter validation pro
 API controller.
 
 You can find the declaration of an aspect responsible for checking condition in `RateLimiterAspect`.
-### 2.1. Rate limiter logic
+### 2.2. Rate limiter logic
 The algorithm we use in this project for the rate limiter is **Sliding window algorithm**. Although we only use one algorithm, the component is designed
 for readers to implement different one as desired by extending the class `UserBasedRateLimiter`. This interface rate limits on api name and user id.
 The sliding window algorithm is implemented in `SlidingWindowUserBasedRateLimiter`
@@ -63,7 +63,7 @@ Following is the summarization of the process.
 You can look through these components to understand how dynamic loading works 
 `PostController`, `RateLimit`, `RateLimiterRuleService`, `SlidingWindowUserBasedRateLimiter`.
 
-### 2.2. Distributed rate limiters.
+### 2.3. Distributed rate limiters.
 For a distributed rate limiter scaled across multiple instances, shared state is required. Redis is used for this shared memory.
 
 While standard Redis transactions use optimistic locking, potentially allowing race conditions (see [Redis transaction](https://redis.io/docs/latest/develop/interact/transactions/#optimistic-locking-using-check-and-set))
