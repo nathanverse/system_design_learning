@@ -63,6 +63,9 @@ Following is the summarization of the process.
 You can look through these components to understand how dynamic loading works 
 `PostController`, `RateLimit`, `RateLimiterRuleService`, `SlidingWindowUserBasedRateLimiter`.
 
+In real life, to ensure low latency requirement for the rate limiter, you may need to load rules from Redis and use a bunch of workers
+to update it periodically.
+
 ### 2.3. Distributed rate limiters.
 For a distributed rate limiter scaled across multiple instances, shared state is required. Redis is used for this shared memory.
 
@@ -105,5 +108,3 @@ $ kubectl port-forward deployment/rate-limiter 8080:8080 -n rate-limiter
 ```
 
 You can now curl to port 8080 to test the rate limiter.
-
-## Appendix B: Implementing Dynamic Loading Rule
