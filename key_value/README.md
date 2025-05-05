@@ -37,3 +37,4 @@ Future Directions
 Replication: Implement data replication across nodes for fault tolerance (Chapter 6), ensuring data availability if a node fails.
 Consistent Hashing: Replace the current modulo-based sharding with consistent hashing to reduce rehashing costs during node additions/removals (Chapter 5).
 ance learning and interview readiness.
+![img.png](img.png)
