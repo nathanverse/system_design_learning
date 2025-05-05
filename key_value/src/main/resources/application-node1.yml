@@ -1,0 +1,15 @@
+server:
+  port: 8080
+node:
+  id: 0
+  port: 8080
+  nodes:
+    - id: 0
+      host: localhost
+      port: 8080
+    - id: 1
+      host: localhost
+      port: 8081
+    - id: 2
+      host: localhost
+      port: 8082

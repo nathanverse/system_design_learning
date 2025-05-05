@@ -14,7 +14,10 @@ public class User {
   private String password; // Store hashed passwords!
   private String role; // e.g., "ROLE_USER", "ROLE_ADMIN"
 
-  public static User copy(User original) {
+    public User(UUID uuid, String admin, String s, String admin1) {
+    }
+
+    public static User copy(User original) {
     return new User(original.id, original.username, original.password, original.role);
   }
 }

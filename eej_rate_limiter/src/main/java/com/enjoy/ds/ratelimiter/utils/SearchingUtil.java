@@ -2,9 +2,7 @@ package com.enjoy.ds.ratelimiter.utils;
 
 import java.util.List;
 import java.util.Objects;
-
 import lombok.NonNull;
-import org.springframework.security.core.parameters.P;
 
 public class SearchingUtil {
   public static int searchMaximumElementLowerThan(
@@ -20,15 +18,15 @@ public class SearchingUtil {
     while (left < right) {
       int mid = left + (right - left) / 2;
 
-      if(timestamps.get(mid) >= timestamp){
+      if (timestamps.get(mid) >= timestamp) {
         right = mid;
-      } else if(timestamps.get(mid) < timestamp) {
+      } else if (timestamps.get(mid) < timestamp) {
         res = mid;
         left = mid + 1;
       }
     }
 
-    if(res != -1 && Objects.equals(timestamps.get(res), timestamp)){
+    if (res != -1 && Objects.equals(timestamps.get(res), timestamp)) {
       return -1;
     }
 
