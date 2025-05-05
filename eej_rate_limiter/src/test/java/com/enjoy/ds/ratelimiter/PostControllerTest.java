@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import com.enjoy.ds.ratelimiter.cache.RedisService;
-import com.enjoy.ds.ratelimiter.core.model.APIRule;
 import com.enjoy.ds.ratelimiter.core.RateLimiterRuleService;
+import com.enjoy.ds.ratelimiter.core.model.APIRule;
 import com.enjoy.ds.ratelimiter.model.Post;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
